@@ -6,13 +6,29 @@ var swclickActual;
 listGexfs();
 
 if(typeof(getUrlParam.file)!=="undefined"){
+//    $.doTimeout(30,function (){
+//        listGexfs();
+//        pr(getUrlParam.file);
+//        //startSigma("");     
+//    });
     $.doTimeout(30,function (){
-        listGexfs();
-        pr(getUrlParam.file);
-        //startSigma("");     
+        pr("getUrlParam.file has something:");
+        if(getUrlParam.file==="" || getUrlParam.file==="-") {
+            pr("\tfile parameter not defined");
+        }
+        else {
+            pr("\tfile parameter NOT empty");            
+            $.doTimeout(30,function (){
+                //listGexfs();
+                startSigma(getUrlParam.file);     
+            });
+        }    
     });
+    
+    
 } else {
-    window.location.href=window.location.origin+window.location.pathname+"?file=\"-\"";
+    pr("oh oh");
+    //window.location.href=window.location.origin+window.location.pathname+"?file=";
 }
 
 function startSigma(path) {
