@@ -102,5 +102,6 @@ function startSigma(path) {
 
     // Draw the graph :
     partialGraph.refresh();
+    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw();
     partialGraph.startForceAtlas2();
 }
