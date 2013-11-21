@@ -1,7 +1,7 @@
-=== The memory problem on Sigma JS ===
+=== A possible solution for the memory problem on Sigma JS ===
 
-In this example, we have a global data folder wich contains several graphs in gexf format.
-For reading each of them, we must adapt a little the sigma js library and list the gexfs inside the data folder. 
-So when we click in one of these, we must see the graph selected, then if i want to view another graph, we must Empty the graph of the sigma instance and rebuild it.
-Everytime we use the function empty(), the memory won't be freed. 
-It's like the sigma core maintains the certain information about the whole graph that we just erased.
+Problem
+https://github.com/PkSM3/sigmajs_tests/tree/master/memoryProblem
+
+Solution:
+Refreshing the page everytime you change the graph
