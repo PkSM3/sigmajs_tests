@@ -23,7 +23,7 @@
   <body>
 <!--    <script src="bootswatch/js/bsa.js"></script>-->
 
-    <div class="navbar navbar-default navbar-fixed-top">
+    <div id="fixedtop" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
 
         <div class="navbar-header">
@@ -107,7 +107,7 @@
       </div><!--container-->
     </div><!--navbar-fixed-top-->
 
-    <div class="navbar navbar-default">
+    <div id="defaultop" class="navbar navbar-default">
 
         <div class="navbar-collapse collapse navbar-responsive-collapse">
                   <ul class="nav navbar-nav">
@@ -137,39 +137,16 @@
     </div><!-- /.navbar -->
 
 
-        <div class="container">
-
-    <div id="wrapper">
+    <div class="cuerpo">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-<!--            <ul class="sidebar-nav">-->
-<!--                <li class="sidebar-brand"><a href="#">Start Bootstrap</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Dashboard</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Shortcuts</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Overview</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Events</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">About</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Services</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Contact</a>-->
-<!--                </li>-->
-<!--            </ul>-->
+        <div id="leftcolumn">
         </div>
 
         <!-- Page content -->
-        <div id="page-content-wrapper">
-                <!-- sigma here -->
-        </div>
+        <div id="sigma-example"></div>
 
-    </div>
-        </div><!--container-->
+    </div><!--cuerpo-->
 
 
 
@@ -177,13 +154,9 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="bootswatch/js/bootswatch.js"></script>
+    <script src="js/sigma.min.2014.js"></script>
+    <script src="js/sigma-plugins/sigma.parsers.gexf.min.js"></script>
+    <script src="js/sigma-plugins/sigma.layout.forceAtlas2.min.js"></script>
     <script src="genesis.js"></script>
-        <!-- Custom JavaScript for the Menu Toggle -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-    });
-    </script>
-  
-</body></html>
+</body>
+</html>
