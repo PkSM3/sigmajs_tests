@@ -8,7 +8,6 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/custom.css" media="screen">
-    <link href="css/sidebar.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700">
     <link rel="stylesheet" href="bootswatch/css/bootswatch.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -137,39 +136,18 @@
     </div><!-- /.navbar -->
 
 
-        <div class="container">
+        <div class="row">
 
-    <div id="wrapper">
+          <div id="leftcolumn"class="col-lg-3">
+		<div class="navbar navbar-default">
+		</div>
+          </div><!--col-lg-3-->
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-<!--            <ul class="sidebar-nav">-->
-<!--                <li class="sidebar-brand"><a href="#">Start Bootstrap</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Dashboard</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Shortcuts</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Overview</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Events</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">About</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Services</a>-->
-<!--                </li>-->
-<!--                <li><a href="#">Contact</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-        </div>
-
-        <!-- Page content -->
-        <div id="page-content-wrapper">
-                <!-- sigma here -->
-        </div>
-
-    </div>
-        </div><!--container-->
+          <div class="col-lg-8">
+		<div class="navbar navbar-default">
+		</div>
+	  </div>
+        </div><!--row-->
 
 
 
@@ -178,12 +156,5 @@
     <script src="js/bootstrap.js"></script>
     <script src="bootswatch/js/bootswatch.js"></script>
     <script src="genesis.js"></script>
-        <!-- Custom JavaScript for the Menu Toggle -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-    });
-    </script>
   
 </body></html>
