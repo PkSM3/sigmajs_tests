@@ -1,0 +1,7 @@
+=== A possible solution for the memory problem on Sigma JS ===
+
+Problem
+https://github.com/PkSM3/sigmajs_tests/tree/master/memoryProblem
+
+Solution:
+Refreshing the page everytime you change the graph
