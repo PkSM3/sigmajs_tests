@@ -979,5 +979,5 @@ var startForceAtlas2 = function(graph) {
     }    
 //    pr(forceatlas2.graph.nodes[0].x)
 //    pr(forceatlas2.graph.nodes[0].y)
-    pr("iterations: "+count)
+    pr("\titerations: "+count)
 };

@@ -344,7 +344,7 @@ function getClientTime(){
     var d = new Date();
     var hours = d.getHours();
     var minutes = parseInt( totalSec / 60 ) % 60;
-    var seconds = totalSec % 60;
+    var seconds = (totalSec % 60).toFixed(4);
     var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
     return result;
 }
@@ -384,6 +384,7 @@ function bringTheNoise(pathfile,type){
     } else {
 	    if(type=="unique_id") {
 		pr("inside bring the noise... unique_id");
+                pr(getClientTime()+" : DataExt Ini");
 		$.ajax({
 		    type: 'GET',
 		    url: bridge["forNormalQuery"],
@@ -394,6 +395,7 @@ function bringTheNoise(pathfile,type){
 		    success : function(data){
                         if(typeof(getUrlParam.seed)!=="undefined")seed=getUrlParam.seed;
 			extractFromJson(data,seed);
+                        pr(getClientTime()+" : DataExt Fin");
 		    },
 		    error: function(){ 
 		        pr("Page Not found. parseCustom, inside the IF");
@@ -406,10 +408,9 @@ function bringTheNoise(pathfile,type){
     updateNodeFilter("social");
     pushSWClick("social");
     /***    heeeere FA2 as function _\m|    ***/
-    pr("Ini FA2: "+getClientTime());
-    pr("FA2 NOW")
+    pr(getClientTime()+" : Ini FA2");
     new startForceAtlas2(partialGraph._core.graph);
-    pr("Fin FA2: "+getClientTime());
+    pr(getClientTime()+" : Fin FA2");
     /***    heeeere FA2 as function _\m|    ***/
     pr("the cancel selection part...")
     cancelSelection(false);
