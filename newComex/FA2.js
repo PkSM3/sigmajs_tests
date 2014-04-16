@@ -248,7 +248,7 @@ var ForceAtlas2 = function(graph) {
         var convg= ((Math.pow(nodes.length,2))/promdxdy);    /**/
         var swingingVSnodes_length = swingingSum/nodes.length;     /**/
         if(convg > swingingVSnodes_length){ 
-            return "fini";
+            self.p.banderita=true;
         }
         
         self.p.totalEffectiveTraction = totalEffectiveTraction;
@@ -328,7 +328,7 @@ var ForceAtlas2 = function(graph) {
             }
           }
         }
-
+        if(self.p.banderita) return "fini";
         if (i == nodes.length) {
           self.state.step = 0;
           self.state.index = 0;
@@ -953,20 +953,20 @@ var applyForce = function(n, Force, theta) {
   }
 };
 
-var startForceAtlas2 = function(graph,iterations) {
-    pr("inside FA2")
+var startForceAtlas2 = function(graph) {
+//    pr("inside FA2")
   //if(!this.forceatlas2) {
 //    pr(graph);
-    pr(graph.nodes[0].x)
-    pr(graph.nodes[0].y)
-    pr("--------")
+//    pr(graph.nodes[0].x)
+//    pr(graph.nodes[0].y)
+//    pr("--------")
     forceatlas2 = new ForceAtlas2(graph);
     forceatlas2.setAutoSettings();
     forceatlas2.init();
     
     count=0;
     flag=false;
-    for(var it=0;it<iterations;it++){
+    while(true){
         for(var jt=0;jt<=5;jt++){
             ret=forceatlas2.onebucle();
             if(ret=="fini") {
@@ -976,15 +976,8 @@ var startForceAtlas2 = function(graph,iterations) {
         }
         count++;
         if(flag) break;
-    }
-
-    
-    pr(forceatlas2.graph.nodes[0].x)
-    pr(forceatlas2.graph.nodes[0].y)
+    }    
+//    pr(forceatlas2.graph.nodes[0].x)
+//    pr(forceatlas2.graph.nodes[0].y)
     pr("iterations: "+count)
-};
-
-var stopForceAtlas2 = function() {
-  this.removeGenerator('forceatlas2');
-//  partialGraph.refresh();
 };

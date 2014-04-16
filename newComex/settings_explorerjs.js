@@ -46,7 +46,7 @@ var desirableScholarSize=6; //Remember that all scholars have the same size!
  *  - false: fa2 stopped at start, button exists
  *  - "off": button doesn't exist, fa2 stopped forever 
  **/
-var fa2enabled=true;
+var fa2enabled="off";
 var showLabelsIfZoom=2.0;
         // ============ < SIGMA.JS PROPERTIES > ============
         var desirableNodeSizeMIN=1;

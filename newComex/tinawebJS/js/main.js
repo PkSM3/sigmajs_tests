@@ -363,6 +363,7 @@ function bringTheNoise(pathfile,type){
     startMiniMap();
     
     console.log("parsing..."); 
+    
     if(mainfile) {
 	    parse(decodeURIComponent(pathfile));
 	    if(type=="mono") {
@@ -395,8 +396,12 @@ function bringTheNoise(pathfile,type){
     updateNodeFilter("social");
     pushSWClick("social");
 /***    heeeere FA2 as function _\m|    ***/
+    pr("FA2 NOW")
+    new startForceAtlas2(partialGraph._core.graph);
+/***    heeeere FA2 as function _\m|    ***/
+    pr("the cancel selection part...")
     cancelSelection(false);
-    console.log("Parsing complete.");     
+    console.log("Parsing and FA2 complete.");     
     
     $("#tips").html(getTips());
 //    $('#sigma-example').css('background-color','white');
@@ -446,8 +451,6 @@ function bringTheNoise(pathfile,type){
     updateDownNodeEvent(false);
     $("#loading").remove();
     $("#aUnfold").click();
-    theListeners();
-//    partialGraph.startForceAtlas2();   
-//    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
-
+    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
+    theListeners();  
 }

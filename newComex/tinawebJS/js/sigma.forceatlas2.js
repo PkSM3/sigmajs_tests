@@ -5,8 +5,10 @@ sigma.forceatlas2.ForceAtlas2 = function(graph) {
   sigma.classes.Cascade.call(this);
   var self = this;
   this.graph = graph;
+  this.count=0;
 
   this.p = {
+    count: 0,
     linLogMode: false,
     outboundAttractionDistribution: false,
     adjustSizes: false,
@@ -63,6 +65,7 @@ sigma.forceatlas2.ForceAtlas2 = function(graph) {
     switch (self.state.step) {
       case 0: // Pass init
         // Initialise layout data
+        self.count++;
         nodes.forEach(function(n) {
           if(n.fa2) {
             n.fa2.mass = 1 + n.degree;
@@ -252,6 +255,7 @@ sigma.forceatlas2.ForceAtlas2 = function(graph) {
             if(numberOfNGrams==nodes.length ){
                 semanticConverged++;
             }
+            pr("iteraciones: "+self.count)
             partialGraph.stopForceAtlas2(); 
         }
         
