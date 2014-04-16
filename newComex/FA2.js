@@ -32,7 +32,6 @@ var ForceAtlas2 = function(graph) {
   // Runtime (the ForceAtlas2 itself)
   this.init = function() {
     self.state = {step: 0, index: 0};
-
     self.graph.nodes.forEach(function(n) {
       n.fa2 = {
         mass: 1 + n.degree,
@@ -47,10 +46,10 @@ var ForceAtlas2 = function(graph) {
   }
 
   this.go = function() {
-    while (self.atomicGo()) {}
+    while (self.onebucle()) {}
   }
 
-  this.atomicGo = function() {
+  this.onebucle = function() {
     var graph = self.graph;
     var nodes = graph.nodes;
     var edges = graph.edges;
@@ -61,6 +60,7 @@ var ForceAtlas2 = function(graph) {
     switch (self.state.step) {
       case 0: // Pass init
         // Initialise layout data
+//        pr("caso 0")
         nodes.forEach(function(n) {
           if(n.fa2) {
             n.fa2.mass = 1 + n.degree;
@@ -99,6 +99,7 @@ var ForceAtlas2 = function(graph) {
         break;
 
       case 1: // Repulsion
+//        pr("caso 1")
         var Repulsion = self.ForceFactory.buildRepulsion(
           self.p.adjustSizes,
           self.p.scalingRatio
@@ -143,6 +144,7 @@ var ForceAtlas2 = function(graph) {
         break;
 
       case 2: // Gravity
+//        pr("caso 2")
         var Gravity = (self.p.strongGravityMode) ?
                       (self.ForceFactory.getStrongGravity(
                         self.p.scalingRatio
@@ -172,6 +174,7 @@ var ForceAtlas2 = function(graph) {
         break;
 
       case 3: // Attraction
+//        pr("caso 3")
         var Attraction = self.ForceFactory.buildAttraction(
           self.p.linLogMode,
           self.p.outboundAttractionDistribution,
@@ -213,6 +216,7 @@ var ForceAtlas2 = function(graph) {
         break;
 
       case 4: // Auto adjust speed
+//        pr("caso 4")
         var totalSwinging = 0;  // How much irregular movement
         var totalEffectiveTraction = 0;  // Hom much useful movement
         var swingingSum=0;
@@ -244,13 +248,7 @@ var ForceAtlas2 = function(graph) {
         var convg= ((Math.pow(nodes.length,2))/promdxdy);    /**/
         var swingingVSnodes_length = swingingSum/nodes.length;     /**/
         if(convg > swingingVSnodes_length){ 
-            if(numberOfDocs==nodes.length){
-                socialConverged++;
-            }
-            if(numberOfNGrams==nodes.length ){
-                semanticConverged++;
-            }
-            partialGraph.stopForceAtlas2(); 
+            return "fini";
         }
         
         self.p.totalEffectiveTraction = totalEffectiveTraction;
@@ -280,6 +278,7 @@ var ForceAtlas2 = function(graph) {
         break;
 
       case 5: // Apply forces
+//        pr("caso 5")
         var i = self.state.index;
         if (self.p.adjustSizes) {
           var speed = self.p.speed;
@@ -954,15 +953,35 @@ var applyForce = function(n, Force, theta) {
   }
 };
 
-var startForceAtlas2 = function(graph) {
+var startForceAtlas2 = function(graph,iterations) {
+    pr("inside FA2")
   //if(!this.forceatlas2) {
-  pr("inside this "+graph);
-//    this.forceatlas2 = new ForceAtlas2(graph);
-//    this.forceatlas2.setAutoSettings();
-//    this.forceatlas2.init();
-//    this.addGenerator('forceatlas2', this.forceatlas2.atomicGo, function(){
-//      return true;
-//    });
+//    pr(graph);
+    pr(graph.nodes[0].x)
+    pr(graph.nodes[0].y)
+    pr("--------")
+    forceatlas2 = new ForceAtlas2(graph);
+    forceatlas2.setAutoSettings();
+    forceatlas2.init();
+    
+    count=0;
+    flag=false;
+    for(var it=0;it<iterations;it++){
+        for(var jt=0;jt<=5;jt++){
+            ret=forceatlas2.onebucle();
+            if(ret=="fini") {
+                flag=true;
+                break;
+            }
+        }
+        count++;
+        if(flag) break;
+    }
+
+    
+    pr(forceatlas2.graph.nodes[0].x)
+    pr(forceatlas2.graph.nodes[0].y)
+    pr("iterations: "+count)
 };
 
 var stopForceAtlas2 = function() {
