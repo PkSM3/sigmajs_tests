@@ -47,6 +47,9 @@ var desirableScholarSize=6; //Remember that all scholars have the same size!
  *  - "off": button doesn't exist, fa2 stopped forever 
  **/
 var fa2enabled="off";
+var iterationsFA2=2000;
+var seed=100000000;//defaultseed
+
 var showLabelsIfZoom=2.0;
         // ============ < SIGMA.JS PROPERTIES > ============
         var desirableNodeSizeMIN=1;
@@ -85,7 +88,6 @@ var showLabelsIfZoom=2.0;
 //"http://webchat.freenode.net/?nick=Ademe&channels=#anoe"
 var ircUrl="http://webchat.freenode.net/?nick="+ircNick+"&channels="+ircCHN;
 var twjs="tinawebJS/";
-var iterationsFA2=1;
 var categories = {};
 var categoriesIndex = [];
 
@@ -151,4 +153,30 @@ var gexfDictReverse={}
 for (var i in gexfDict){
     gexfDictReverse[gexfDict[i]]=i;
 }
+
+var RVUniformC = function(seed){
+    this.a=16807;
+    this.b=0;
+    this.m=2147483647;
+    this.u;
+    this.seed=seed;
+    this.x = this.seed;
+//    this.generar = function(n){
+//        uniforme = [];
+//        x = 0.0;
+//        x = this.seed;
+//        for(i = 1; i < n ; i++){
+//            x = ((x*this.a)+this.b)%this.m;
+//            uniforme[i] = x/this.m;
+//        }
+//        return uniforme;
+//    };
+    this.getRandom = function(){
+        x = ((this.x*this.a)+this.b)%this.m;
+        this.x = x;
+        this.u = this.x/this.m;
+        return this.u;
+    };
+}
+//unifCont = new RVUniformC(100000000)
 

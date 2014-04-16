@@ -46,8 +46,8 @@ def main():
 
 	spatialized.getGraph()
 
-	for i in range(0,i):
-		spatialized.atomicGo()
+#	for i in range(0,i):
+#		spatialized.atomicGo()
 	
 
 	graphArray = db.buildJSON_sansfa2(db.Graph,spatialized.getGraph())

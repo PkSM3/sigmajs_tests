@@ -577,8 +577,9 @@ function fullExtract(){
 }
     
 
-function extractFromJson(data){
+function extractFromJson(data,seed){
     var i, j, k;
+    rand=new RVUniformC(seed);                     
     //partialGraph.emptyGraph();
     // Parse Attributes
     // This is confusing, so I'll comment heavily
@@ -608,8 +609,8 @@ function extractFromJson(data){
                 id:i,
                 label:nodesNodes[i].label, 
                 size:1, 
-                x:nodesNodes[i].x, 
-                y:nodesNodes[i].y, 
+                x:rand.getRandom(), 
+                y:rand.getRandom(), 
                 //x:Math.random(),
                 //y:Math.random(),
                 type:"",

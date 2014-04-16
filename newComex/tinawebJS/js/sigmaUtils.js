@@ -1,4 +1,5 @@
 
+
 function getnodes(){
     return partialGraph._core.graph.nodes;
 }

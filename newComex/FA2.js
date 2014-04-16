@@ -955,7 +955,7 @@ var applyForce = function(n, Force, theta) {
 
 var startForceAtlas2 = function(graph) {
 //    pr("inside FA2")
-  //if(!this.forceatlas2) {
+////  if(!this.forceatlas2) {
 //    pr(graph);
 //    pr(graph.nodes[0].x)
 //    pr(graph.nodes[0].y)
@@ -975,7 +975,7 @@ var startForceAtlas2 = function(graph) {
             }
         }
         count++;
-        if(flag) break;
+        if(flag||count>iterationsFA2) break;
     }    
 //    pr(forceatlas2.graph.nodes[0].x)
 //    pr(forceatlas2.graph.nodes[0].y)

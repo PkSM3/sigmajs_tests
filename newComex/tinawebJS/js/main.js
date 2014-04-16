@@ -51,7 +51,6 @@ function scanDataFolder(){
         });
 }
 
-
 function getGexfPath(v){
 	gexfpath=(gexfDictReverse[v])?gexfDictReverse[v]:v;
         return gexfpath;
@@ -340,6 +339,16 @@ function theListeners(){
     });
 }
 
+function getClientTime(){
+    var totalSec = new Date().getTime() / 1000;
+    var d = new Date();
+    var hours = d.getHours();
+    var minutes = parseInt( totalSec / 60 ) % 60;
+    var seconds = totalSec % 60;
+    var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
+    return result;
+}
+
 //just CSS
 function sigmaLimits(){
 	sidebar=$('#leftcolumn').width();
@@ -382,8 +391,9 @@ function bringTheNoise(pathfile,type){
 		    contentType: "application/json",
 		    dataType: 'jsonp',
 		    async: false,
-		    success : function(data){ 
-			extractFromJson(data);
+		    success : function(data){
+                        if(typeof(getUrlParam.seed)!=="undefined")seed=getUrlParam.seed;
+			extractFromJson(data,seed);
 		    },
 		    error: function(){ 
 		        pr("Page Not found. parseCustom, inside the IF");
@@ -395,16 +405,18 @@ function bringTheNoise(pathfile,type){
     updateEdgeFilter("social");
     updateNodeFilter("social");
     pushSWClick("social");
-/***    heeeere FA2 as function _\m|    ***/
+    /***    heeeere FA2 as function _\m|    ***/
+    pr("Ini FA2: "+getClientTime());
     pr("FA2 NOW")
     new startForceAtlas2(partialGraph._core.graph);
-/***    heeeere FA2 as function _\m|    ***/
+    pr("Fin FA2: "+getClientTime());
+    /***    heeeere FA2 as function _\m|    ***/
     pr("the cancel selection part...")
     cancelSelection(false);
     console.log("Parsing and FA2 complete.");     
     
     $("#tips").html(getTips());
-//    $('#sigma-example').css('background-color','white');
+    //$('#sigma-example').css('background-color','white');
     $("#category-B").hide();
     $("#labelchange").hide();
     $("#availableView").hide();  
