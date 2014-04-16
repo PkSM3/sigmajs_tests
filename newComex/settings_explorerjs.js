@@ -9,9 +9,6 @@ var getAdditionalInfo=false;//for topPapers div
 var mainfile=false;
 var dataFolderTree = {};
 var gexfDict={};
-//gexfDict["data/the.gexf"]="The characteristic name";
-
-
 
 var bridge={};
 external="";
@@ -49,7 +46,7 @@ var desirableScholarSize=6; //Remember that all scholars have the same size!
  *  - false: fa2 stopped at start, button exists
  *  - "off": button doesn't exist, fa2 stopped forever 
  **/
-var fa2enabled=false;
+var fa2enabled=true;
 var showLabelsIfZoom=2.0;
         // ============ < SIGMA.JS PROPERTIES > ============
         var desirableNodeSizeMIN=1;

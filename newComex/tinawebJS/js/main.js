@@ -94,117 +94,7 @@ function listGexfs(){
     });    
 }
 
-//just CSS
-function sigmaLimits(){
-	sidebar=$('#leftcolumn').width();
-	anchototal=$('#fixedtop').width();
-	altototal=$('#leftcolumn').height();
-	altofixtop=$('#fixedtop').height()
-	altodeftop=$('#defaultop').height()
-	$('#sigma-example').width(anchototal-sidebar);
-	$('#sigma-example').height(altototal-altofixtop-altodeftop-2);
-}
-
-function bringTheNoise(pathfile,type){
-    sigmaLimits();
-    
-    partialGraph = sigma.init(document.getElementById('sigma-example'))
-    .drawingProperties(sigmaJsDrawingProperties)
-    .graphProperties(sigmaJsGraphProperties)
-    .mouseProperties(sigmaJsMouseProperties);
-    var body=document.getElementsByTagName('body')[0];
-    body.style.paddingTop="41px";
-    startMiniMap();
-    
-    console.log("parsing..."); 
-    if(mainfile) {
-	    parse(decodeURIComponent(pathfile));
-	    if(type=="mono") {
-		onepartiteExtract(); 
-		$("#left").hide();
-	    } else if(type=="bi") {
-		fullExtract(); 
-	    }
-    } else {
-	    if(type=="unique_id") {
-		pr("inside bring the noise... unique_id");
-		$.ajax({
-		    type: 'GET',
-		    url: bridge["forNormalQuery"],
-		    data: "unique_id="+pathfile+"&it="+iterationsFA2,
-		    contentType: "application/json",
-		    dataType: 'jsonp',
-		    async: false,
-		    success : function(data){ 
-			extractFromJson(data);
-		    },
-		    error: function(){ 
-		        pr("Page Not found. parseCustom, inside the IF");
-		    }
-		});
-	    }
-    }
-    if(fa2enabled==="off") $("#edgesButton").hide();
-    updateEdgeFilter("social");
-    updateNodeFilter("social");
-    pushSWClick("social");
-    cancelSelection(false);
-    console.log("Parsing complete.");     
-    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
-    partialGraph.startForceAtlas2();   
-    
-    $("#tips").html(getTips());
-    $('#sigma-example').css('background-color','white');
-    $("#category-B").hide();
-    $("#labelchange").hide();
-    $("#availableView").hide();  
-    /*======= Show some labels at the beginning =======*/
-    minIn=50,
-    maxIn=0,
-    minOut=50,
-    maxOut=0;        
-    partialGraph.iterNodes(function(n){
-        if(n.hidden==false){
-            if(parseInt(n.inDegree) < minIn) minIn= n.inDegree;
-            if(parseInt(n.inDegree) > maxIn) maxIn= n.inDegree;
-            if(parseInt(n.outDegree) < minOut) minOut= n.outDegree;
-            if(parseInt(n.outDegree) > maxOut) maxOut= n.outDegree;
-        }
-    });
-    counter=0;
-    n = partialGraph._core.graph.nodes;
-    for(i=0;i<n.length;i++) {
-        if(n[i].hidden==false){
-            if(n[i].inDegree==minIn && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].inDegree==maxIn && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].outDegree==minOut && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].outDegree==maxOut && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(counter==6) break;
-        }
-    }
-    /*======= Show some labels at the beginning =======*/
-    initializeMap();
-    updateMap();
-    
-    updateDownNodeEvent(false);    
-    
-    
-    
-    
-    
-    $("#loading").remove();
+function theListeners(){
     $("#saveAs").click(function() {
         saveGEXF();
     });
@@ -231,7 +121,7 @@ function bringTheNoise(pathfile,type){
         }
         return false;
     });
-    $("#aUnfold").click();
+    
     
     
     /******************* /SEARCH ***********************/
@@ -448,4 +338,116 @@ function bringTheNoise(pathfile,type){
         //return callSlider("#sliderSelectionZone", "selectionRadius");
         }
     });
+}
+
+//just CSS
+function sigmaLimits(){
+	sidebar=$('#leftcolumn').width();
+	anchototal=$('#fixedtop').width();
+	altototal=$('#leftcolumn').height();
+	altofixtop=$('#fixedtop').height()
+	altodeftop=$('#defaultop').height()
+	$('#sigma-example').width(anchototal-sidebar);
+	$('#sigma-example').height(altototal-altofixtop-altodeftop-2);
+}
+
+function bringTheNoise(pathfile,type){
+    sigmaLimits();
+    
+    partialGraph = sigma.init(document.getElementById('sigma-example'))
+    .drawingProperties(sigmaJsDrawingProperties)
+    .graphProperties(sigmaJsGraphProperties)
+    .mouseProperties(sigmaJsMouseProperties);
+    var body=document.getElementsByTagName('body')[0];
+    body.style.paddingTop="41px";
+    startMiniMap();
+    
+    console.log("parsing..."); 
+    if(mainfile) {
+	    parse(decodeURIComponent(pathfile));
+	    if(type=="mono") {
+		onepartiteExtract(); 
+		$("#left").hide();
+	    } else if(type=="bi") {
+		fullExtract(); 
+	    }
+    } else {
+	    if(type=="unique_id") {
+		pr("inside bring the noise... unique_id");
+		$.ajax({
+		    type: 'GET',
+		    url: bridge["forNormalQuery"],
+		    data: "unique_id="+pathfile+"&it="+iterationsFA2,
+		    contentType: "application/json",
+		    dataType: 'jsonp',
+		    async: false,
+		    success : function(data){ 
+			extractFromJson(data);
+		    },
+		    error: function(){ 
+		        pr("Page Not found. parseCustom, inside the IF");
+		    }
+		});
+	    }
+    }
+    if(fa2enabled==="off") $("#edgesButton").hide();
+    updateEdgeFilter("social");
+    updateNodeFilter("social");
+    pushSWClick("social");
+/***    heeeere FA2 as function _\m|    ***/
+    cancelSelection(false);
+    console.log("Parsing complete.");     
+    
+    $("#tips").html(getTips());
+//    $('#sigma-example').css('background-color','white');
+    $("#category-B").hide();
+    $("#labelchange").hide();
+    $("#availableView").hide();  
+    /*======= Show some labels at the beginning =======*/
+    minIn=50,
+    maxIn=0,
+    minOut=50,
+    maxOut=0;        
+    partialGraph.iterNodes(function(n){
+        if(n.hidden==false){
+            if(parseInt(n.inDegree) < minIn) minIn= n.inDegree;
+            if(parseInt(n.inDegree) > maxIn) maxIn= n.inDegree;
+            if(parseInt(n.outDegree) < minOut) minOut= n.outDegree;
+            if(parseInt(n.outDegree) > maxOut) maxOut= n.outDegree;
+        }
+    });
+    counter=0;
+    n = partialGraph._core.graph.nodes;
+    for(i=0;i<n.length;i++) {
+        if(n[i].hidden==false){
+            if(n[i].inDegree==minIn && n[i].forceLabel==false) {
+                n[i].forceLabel=true;
+                counter++;
+            }
+            if(n[i].inDegree==maxIn && n[i].forceLabel==false) {
+                n[i].forceLabel=true;
+                counter++;
+            }
+            if(n[i].outDegree==minOut && n[i].forceLabel==false) {
+                n[i].forceLabel=true;
+                counter++;
+            }
+            if(n[i].outDegree==maxOut && n[i].forceLabel==false) {
+                n[i].forceLabel=true;
+                counter++;
+            }
+            if(counter==6) break;
+        }
+    }
+    /*======= Show some labels at the beginning =======*/
+    initializeMap();
+    updateMap();
+    
+    updateDownNodeEvent(false);
+    $("#loading").remove();
+    $("#aUnfold").click();
+    theListeners();
+//    partialGraph.startForceAtlas2();   
+//    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
+
 }

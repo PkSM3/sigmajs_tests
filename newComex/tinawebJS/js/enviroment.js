@@ -3,26 +3,24 @@
 //============================ < NEW BUTTONS > =============================//
 
 function changeButton(bc) { 
-	pr("\tin NEW changeNewButtons");
 	if(typeof(bc.id)!=="undefined" && bc.id!=swclickActual) {
-	
-		pr("bufferPrev: "+swclickPrev);
-		pr("bufferActual: "+swclickActual);
-		pr("click: "+bc.id)
-		pr("-----------------------")
 		pushSWClick(bc.id)
 		if(bc.id=="social") {
 			changeToMacro("social");
+//			$("#category-A").show();
+//			$("#category-B").hide();
 		}
 		if(bc.id=="semantic") {
 			changeToMacro("semantic");
+//			$("#category-A").hide();
+//			$("#category-B").show();
 		}
 		if(bc.id=="sociosemantic") {
+			pr("ama heeeeere")
 			changeToMacro("sociosemantic");
+//			$("#category-A").show();
+//			$("#category-B").show();
 		}
-		pr("bufferPrev: "+swclickPrev);
-		pr("bufferActual: "+swclickActual);
-		pr("-----------------------")
 	}
 
 //    fullurl = returnBaseUrl()+"img/trans/";
