@@ -30,7 +30,7 @@ function(s) {
 	console.log(s)
 	var c = s.camera;
 	c.goTo({ ratio: 1.2 });
-	s.startForceAtlas2();
+//	s.startForceAtlas2();
 });
 
 

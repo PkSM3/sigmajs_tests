@@ -2,9 +2,22 @@
 	margin-bottom:1px;
 }
 
- #sigma-example {
+#sigma-example {
     width: 100%;
     height: 300px;
     position:relative;
     float:right;
-  }
+}
+
+/*.btn-sm[normal] {*/
+/*  background-image: -webkit-linear-gradient(#5f8ab9, #3e648d 50%, #385a7f);*/
+/*  background-image: linear-gradient(#5f8ab9, #3e648d 50%, #385a7f);*/
+/*  background-repeat: no-repeat;*/
+/*  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5f8ab9', endColorstr='#ff385a7f', GradientType=0);*/
+/*  filter: none;*/
+/*  border: 1px solid #2e4b69;*/
+/*}*/
+
+#left{
+  display: inline-block;
+}
