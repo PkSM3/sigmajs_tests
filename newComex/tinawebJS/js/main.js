@@ -367,23 +367,22 @@ function bringTheNoise(pathfile,type){
     .drawingProperties(sigmaJsDrawingProperties)
     .graphProperties(sigmaJsGraphProperties)
     .mouseProperties(sigmaJsMouseProperties);
+    
     var body=document.getElementsByTagName('body')[0];
     body.style.paddingTop="41px";
+    
     startMiniMap();
     
-    console.log("parsing..."); 
-    
+    console.log("parsing...");     
     if(mainfile) {
 	    parse(decodeURIComponent(pathfile));
 	    if(type=="mono") {
 		onepartiteExtract(); 
 		$("#left").hide();
-	    } else if(type=="bi") {
-		fullExtract(); 
-	    }
+	    } else if(type=="bi")  fullExtract(); 
     } else {
 	    if(type=="unique_id") {
-		pr("inside bring the noise... unique_id");
+		pr("bring the noise, case: unique_id");
                 pr(getClientTime()+" : DataExt Ini");
 		$.ajax({
 		    type: 'GET',
@@ -393,7 +392,7 @@ function bringTheNoise(pathfile,type){
 		    dataType: 'jsonp',
 		    async: false,
 		    success : function(data){
-                        if(typeof(getUrlParam.seed)!=="undefined")seed=getUrlParam.seed;
+                        if(!isUndef(getUrlParam.seed))seed=getUrlParam.seed;
 			extractFromJson(data,seed);
                         pr(getClientTime()+" : DataExt Fin");
 		    },

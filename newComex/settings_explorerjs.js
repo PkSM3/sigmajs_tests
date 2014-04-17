@@ -47,7 +47,7 @@ var desirableScholarSize=6; //Remember that all scholars have the same size!
  *  - "off": button doesn't exist, fa2 stopped forever 
  **/
 var fa2enabled="off";
-var iterationsFA2=1600;
+var iterationsFA2=1000;
 var seed=999999999;//defaultseed
 
 var showLabelsIfZoom=2.0;

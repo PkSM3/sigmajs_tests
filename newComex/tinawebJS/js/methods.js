@@ -3,6 +3,11 @@ function pr(msg) {
     console.log(msg);
 }
 
+function isUndef(variable){
+    if(typeof(variable)==="undefined") return true;
+    else return false;
+}
+
 $.fn.toggleClick = function(){
         methods = arguments, // store the passed arguments for future reference
             count = methods.length; // cache the number of methods 
