@@ -99,6 +99,7 @@ var overNodes=false;
 
 var swclickActual="";
 var swclickPrev="";
+var swMacro=true;
 
 var socsemFlag=false;
 var constantNGramFilter;

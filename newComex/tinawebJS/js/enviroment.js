@@ -3,25 +3,35 @@
 //============================ < NEW BUTTONS > =============================//
 
 function changeButton(bc) { 
-	if(typeof(bc.id)!=="undefined" && bc.id!=swclickActual) {
-		pushSWClick(bc.id)
-		if(bc.id=="social") {
-			changeToMacro("social");
+    if(!isUndef(bc.id) && bc.id!=swclickActual) {
+        
+        if(bc.id!="switch") pushSWClick(bc.id);
+        else pushSWClick(swclickActual)
+        
+        pr("\t***changebutton bc.id:"+bc.id+" , swMacro:"+swMacro)
+        if(bc.id=="social") {
+            if(swMacro) changeToMacro(bc.id);
+            else changeToMeso(bc.id);
 //			$("#category-A").show();
 //			$("#category-B").hide();
-		}
-		if(bc.id=="semantic") {
-			changeToMacro("semantic");
+        }
+        if(bc.id=="semantic") {
+            if(swMacro) changeToMacro(bc.id);
+            else changeToMeso(bc.id);
 //			$("#category-A").hide();
 //			$("#category-B").show();
-		}
-		if(bc.id=="sociosemantic") {
-			pr("ama heeeeere")
-			changeToMacro("sociosemantic");
+        }
+        if(bc.id=="sociosemantic") {
+            if(swMacro) changeToMacro(bc.id);
+            else changeToMeso(bc.id);
 //			$("#category-A").show();
 //			$("#category-B").show();
-		}
-	}
+        }
+        if(bc.id=="switch"){
+            if(swMacro) changeToMacro(swclickActual);
+            else changeToMeso(swclickActual);
+        }
+    }
 
 //    fullurl = returnBaseUrl()+"img/trans/";
 //    if(img.id=="socio") {
@@ -147,57 +157,6 @@ function changeButton(bc) {
 ////    }
 }
 
-function changeInactvHover(imgClicked) { 
-    fullurl = returnBaseUrl()+"img/trans/";
-    if(imgClicked.id=="socio") {
-        if ( imgClicked.src==fullurl+"inactive_scholar.png" ) {
-            imgClicked.src=fullurl+"hover_scholar.png"
-        }
-        if ( imgClicked.src==fullurl+"inactive_scholars.png" ) {
-            imgClicked.src=fullurl+"hover_scholars.png"
-        }
-    }
-    if(imgClicked.id=="semantic") {
-        if ( imgClicked.src==fullurl+"inactive_tag.png" ) {
-            imgClicked.src=fullurl+"hover_tag.png"
-        }
-        if ( imgClicked.src==fullurl+"inactive_tags.png" ) {
-            imgClicked.src=fullurl+"hover_tags.png"
-        }        
-    }
-    if(imgClicked.id=="sociosemantic") {
-        if ( imgClicked.src==fullurl+"inactive_sociosem.png" ) {
-            imgClicked.src=fullurl+"hover_sociosem.png"
-        }     
-    }
-}
-
-function changeHoverInactv(imgClicked) {  
-    fullurl = returnBaseUrl()+"img/trans/";
-    if(imgClicked.id=="socio") {
-        if ( imgClicked.src==fullurl+"hover_scholar.png" ) {
-            imgClicked.src=fullurl+"inactive_scholar.png"
-        }
-        if ( imgClicked.src==fullurl+"hover_scholars.png" ) {
-            imgClicked.src=fullurl+"inactive_scholars.png"
-        }        
-    }
-    if(imgClicked.id=="semantic") {
-        if ( imgClicked.src==fullurl+"hover_tag.png" ) {
-            imgClicked.src=fullurl+"inactive_tag.png"
-        }
-        if ( imgClicked.src==fullurl+"hover_tags.png" ) {
-            imgClicked.src=fullurl+"inactive_tags.png"
-        }
-    }
-    
-    if(imgClicked.id=="sociosemantic") {
-        if ( imgClicked.src==fullurl+"hover_sociosem.png" ) {
-            imgClicked.src=fullurl+"inactive_sociosem.png"
-        }    
-    }
-}
-
 function changeHoverActive(img) {
     fullurl = returnBaseUrl()+"img/trans/";
     if(img.id=="socio") {
@@ -317,7 +276,7 @@ function updateEdgeFilter(edgeFilterName) {
     for(var i in edges){
         if(edges[i].hidden==false){
             if(edges[i].label==thing){
-                if(typeof(edgesByWeight[edges[i].weight])=="undefined"){
+                if(isUndef(edgesByWeight[edges[i].weight])){
                     edgesByWeight[edges[i].weight]=[];
                 }
                 edgesByWeight[edges[i].weight].push(edges[i].id);
@@ -339,7 +298,7 @@ function updateEdgeFilter(edgeFilterName) {
     nbCuts=Math.floor(edges.length/10);
     for(var i in edgesSortedByWeight){
         for(var j in edgesSortedByWeight[i].value){
-            if(typeof(normEdges[index])=="undefined"){
+            if(isUndef(normEdges[index])){
                 normEdges[index]=[];
             }
             normEdges[index].push(edgesSortedByWeight[i].value[j])
@@ -373,7 +332,7 @@ function updateEdgeFilter(edgeFilterName) {
                         for (var j in normEdges[i]){
                             id=normEdges[i][j];
                             //pr("unHideElem("+id+");");
-//                            if(typeof(edgesTemp[id])=="undefined"){
+//                            if(isUndef(edgesTemp[id])){
 //                                //source=Edges[id].sourceID;
 //                                //target=Edges[id].targetID;
 //                                //edge=Edges[id];
@@ -406,13 +365,13 @@ function updateBothEdgeFilters() {
     
     for(var i in edges){
         if(edges[i].label=="nodes1"){
-            if(typeof(scholarsEdgesByWeight[edges[i].weight])=="undefined"){
+            if(isUndef(scholarsEdgesByWeight[edges[i].weight])){
                 scholarsEdgesByWeight[edges[i].weight]=[];
             }
             scholarsEdgesByWeight[edges[i].weight].push(edges[i].id);
         }
         if(edges[i].label=="nodes2"){
-            if(typeof(keywordsEdgesByWeight[edges[i].weight])=="undefined"){
+            if(isUndef(keywordsEdgesByWeight[edges[i].weight])){
                 keywordsEdgesByWeight[edges[i].weight]=[];
             }
             keywordsEdgesByWeight[edges[i].weight].push(edges[i].id);            
@@ -431,7 +390,7 @@ function updateBothEdgeFilters() {
 //    index=0;
 //    for(var i in scholarsEdgesSortedByWeight){
 //        for(var j in scholarsEdgesSortedByWeight[i].value){
-//            if(typeof(normScholarEdges[index])=="undefined"){
+//            if(isUndef(normScholarEdges[index])){
 //                normScholarEdges[index]=[];
 //            }
 //            normScholarEdges[index].push(scholarsEdgesSortedByWeight[i].value[j])
@@ -460,7 +419,7 @@ function updateBothEdgeFilters() {
                         for (var j in scholarsEdgesSortedByWeight[i].value){
                             id=scholarsEdgesSortedByWeight[i].value[j];
                             unHideElem(id);
-//                            if(typeof(edgesTemp[id])=="undefined"){
+//                            if(isUndef(edgesTemp[id])){
 //                                source=Edges[id].sourceID;
 //                                target=Edges[id].targetID;
 //                                edge=Edges[id];
@@ -495,7 +454,7 @@ function updateBothEdgeFilters() {
                         for (var j in keywordsEdgesSortedByWeight[i].value){
                             id=keywordsEdgesSortedByWeight[i].value[j];
                             unHideElem(id);
-//                            if(typeof(edgesTemp[id])=="undefined"){
+//                            if(isUndef(edgesTemp[id])){
 //                                source=Edges[id].sourceID;
 //                                target=Edges[id].targetID;
 //                                edge=Edges[id];
@@ -538,13 +497,13 @@ function updateNodeFilter(nodeFilterName) {
     nodesBySize=[];
     for(var i in nodes){
         if(Nodes[nodes[i].id].type==catSoc){
-            if(typeof(nodesBySize[nodes[i].degree])=="undefined"){
+            if(isUndef(nodesBySize[nodes[i].degree])){
                 nodesBySize[nodes[i].degree]=[];
             }
             nodesBySize[nodes[i].degree].push(nodes[i].id);
         }
         if(Nodes[nodes[i].id].type==catSem){
-            if(typeof(nodesBySize[nodes[i].size])=="undefined"){
+            if(isUndef(nodesBySize[nodes[i].size])){
                 nodesBySize[nodes[i].size]=[];
             }
             nodesBySize[nodes[i].size].push(nodes[i].id);
@@ -597,13 +556,13 @@ function updateBothNodeFilters() {
     
     for(var i in nodes){
         if(Nodes[nodes[i].id].type==catSoc){
-            if(typeof(scholarsNodesBySize[nodes[i].degree])=="undefined"){
+            if(isUndef(scholarsNodesBySize[nodes[i].degree])){
                 scholarsNodesBySize[nodes[i].degree]=[];
             }
             scholarsNodesBySize[nodes[i].degree].push(nodes[i].id);
         }
         if(Nodes[nodes[i].id].type==catSem){
-            if(typeof(keywordsNodesBySize[nodes[i].size])=="undefined"){
+            if(isUndef(keywordsNodesBySize[nodes[i].size])){
                 keywordsNodesBySize[nodes[i].size]=[];
             }
             keywordsNodesBySize[nodes[i].size].push(nodes[i].id);
