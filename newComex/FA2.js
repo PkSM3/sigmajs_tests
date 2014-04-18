@@ -975,9 +975,27 @@ var startForceAtlas2 = function(graph) {
             }
         }
         count++;
-        if(flag||count>iterationsFA2) break;
+        if(flag||count>1600) break;
     }    
 //    pr(forceatlas2.graph.nodes[0].x)
 //    pr(forceatlas2.graph.nodes[0].y)
-    pr("\titerations: "+count)
+//    console.log("\titerations: "+count)
+    result={
+        "nodes":forceatlas2.graph.nodes,
+        "it":count        
+    }
+    return result;
 };
+
+self.addEventListener("message", function(e) {
+    var graph = {
+        "nodes":e.data.nodes,
+        "edges":e.data.edges
+    }
+    result=startForceAtlas2(graph)
+    postMessage({
+        "nodes":result.nodes,
+        "it":result.it
+    });
+    
+}, false);

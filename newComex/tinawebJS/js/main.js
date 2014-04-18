@@ -361,8 +361,8 @@ function sigmaLimits(){
 }
 
 function bringTheNoise(pathfile,type){
+    $('.modal').modal('show');
     sigmaLimits();
-    
     partialGraph = sigma.init(document.getElementById('sigma-example'))
     .drawingProperties(sigmaJsDrawingProperties)
     .graphProperties(sigmaJsGraphProperties)
@@ -373,7 +373,8 @@ function bringTheNoise(pathfile,type){
     
     startMiniMap();
     
-    console.log("parsing...");     
+    console.log("parsing...");    
+    // < === EXTRACTING DATA === >
     if(mainfile) {
 	    parse(decodeURIComponent(pathfile));
 	    if(type=="mono") {
@@ -401,68 +402,54 @@ function bringTheNoise(pathfile,type){
 		    }
 		});
 	    }
-    }
+    }  
+    // < === DATA EXTRACTED!! === >
+    
     if(fa2enabled==="off") $("#edgesButton").hide();
     updateEdgeFilter("social");
     updateNodeFilter("social");
     pushSWClick("social");
-    /***    heeeere FA2 as function _\m|    ***/
+    
+    // < === ASYNCHRONOUS FA2.JS === >
     pr(getClientTime()+" : Ini FA2");
-    new startForceAtlas2(partialGraph._core.graph);
-    pr(getClientTime()+" : Fin FA2");
-    /***    heeeere FA2 as function _\m|    ***/
-    pr("the cancel selection part...")
-    cancelSelection(false);
-    console.log("Parsing and FA2 complete.");     
-    
-    $("#tips").html(getTips());
-    //$('#sigma-example').css('background-color','white');
-    $("#category-B").hide();
-    $("#labelchange").hide();
-    $("#availableView").hide();  
-    /*======= Show some labels at the beginning =======*/
-    minIn=50,
-    maxIn=0,
-    minOut=50,
-    maxOut=0;        
-    partialGraph.iterNodes(function(n){
-        if(n.hidden==false){
-            if(parseInt(n.inDegree) < minIn) minIn= n.inDegree;
-            if(parseInt(n.inDegree) > maxIn) maxIn= n.inDegree;
-            if(parseInt(n.outDegree) < minOut) minOut= n.outDegree;
-            if(parseInt(n.outDegree) > maxOut) maxOut= n.outDegree;
-        }
+    var ForceAtlas2 = new Worker("FA2.js");
+    ForceAtlas2.postMessage({ 
+        "nodes": partialGraph._core.graph.nodes,
+        "edges": partialGraph._core.graph.edges
     });
-    counter=0;
-    n = partialGraph._core.graph.nodes;
-    for(i=0;i<n.length;i++) {
-        if(n[i].hidden==false){
-            if(n[i].inDegree==minIn && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].inDegree==maxIn && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].outDegree==minOut && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(n[i].outDegree==maxOut && n[i].forceLabel==false) {
-                n[i].forceLabel=true;
-                counter++;
-            }
-            if(counter==6) break;
+    ForceAtlas2.addEventListener('message', function(e) {
+        iterations=e.data.it;
+        nds=e.data.nodes;
+        for(var n in nds){
+            id=nds[n].id;
+            x=nds[n].x
+            y=nds[n].y
+            partialGraph._core.graph.nodes[n].x=x;
+            partialGraph._core.graph.nodes[n].y=y;
+            partialGraph._core.graph.nodesIndex[id].x=x
+            partialGraph._core.graph.nodesIndex[id].y=y
+            Nodes[id].x=x;
+            Nodes[id].y=y;
         }
-    }
-    /*======= Show some labels at the beginning =======*/
-    initializeMap();
-    updateMap();
-    
-    updateDownNodeEvent(false);
-    $("#loading").remove();
-    $("#aUnfold").click();
-    partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
-    theListeners();  
+        pr(getClientTime()+" : Fin FA2");
+        console.log("Parsing and FA2 complete.");
+        // < === ASYNCHRONOUS FA2.JS DONE!! === >
+        
+        $("#closemodal").click();//modal.hide doesnt work :c
+        //    startForceAtlas2(partialGraph._core.graph);r(
+        
+        cancelSelection(false);        
+        $("#tips").html(getTips());
+        //$('#sigma-example').css('background-color','white');
+        $("#category-B").hide();
+        $("#labelchange").hide();
+        $("#availableView").hide(); 
+        showMeSomeLabels(6);
+        initializeMap();
+        updateMap();
+        updateDownNodeEvent(false);
+        $("#aUnfold").click();
+        partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
+        theListeners(); 
+    }); 
 }

@@ -1,4 +1,42 @@
-
+function showMeSomeLabels(N){
+        /*======= Show some labels at the beginning =======*/
+        minIn=50,
+        maxIn=0,
+        minOut=50,
+        maxOut=0;        
+        partialGraph.iterNodes(function(n){
+            if(n.hidden==false){
+                if(parseInt(n.inDegree) < minIn) minIn= n.inDegree;
+                if(parseInt(n.inDegree) > maxIn) maxIn= n.inDegree;
+                if(parseInt(n.outDegree) < minOut) minOut= n.outDegree;
+                if(parseInt(n.outDegree) > maxOut) maxOut= n.outDegree;
+            }
+        });
+        counter=0;
+        n = partialGraph._core.graph.nodes;
+        for(i=0;i<n.length;i++) {
+            if(n[i].hidden==false){
+                if(n[i].inDegree==minIn && n[i].forceLabel==false) {
+                    n[i].forceLabel=true;
+                    counter++;
+                }
+                if(n[i].inDegree==maxIn && n[i].forceLabel==false) {
+                    n[i].forceLabel=true;
+                    counter++;
+                }
+                if(n[i].outDegree==minOut && n[i].forceLabel==false) {
+                    n[i].forceLabel=true;
+                    counter++;
+                }
+                if(n[i].outDegree==maxOut && n[i].forceLabel==false) {
+                    n[i].forceLabel=true;
+                    counter++;
+                }
+                if(counter==N) break;
+            }
+        }
+        /*======= Show some labels at the beginning =======*/
+}
 
 function getnodes(){
     return partialGraph._core.graph.nodes;

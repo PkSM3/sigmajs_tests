@@ -21,3 +21,12 @@
 #left{
   display: inline-block;
 }
+
+
+/*.modal-vertical-centered {*/
+#loader{
+    text-align:center;
+    transform: translate(0, 50%) !important;
+    -ms-transform: translate(0, 50%) !important;  /*IE 9*/ 
+    -webkit-transform: translate(0, 50%) !important;  /*Safari and Chrome */
+}
