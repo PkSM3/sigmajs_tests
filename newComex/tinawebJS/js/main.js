@@ -390,11 +390,62 @@ function bringTheNoise(pathfile,type){
 		    data: "unique_id="+pathfile+"&it="+iterationsFA2,
 		    contentType: "application/json",
 		    dataType: 'jsonp',
-		    async: false,
+		    async: true,
 		    success : function(data){
                         if(!isUndef(getUrlParam.seed))seed=getUrlParam.seed;
 			extractFromJson(data,seed);
                         pr(getClientTime()+" : DataExt Fin");
+    // < === DATA EXTRACTED!! === >
+
+                        if(fa2enabled==="off") $("#edgesButton").hide();
+                        updateEdgeFilter("social");
+                        updateNodeFilter("social");
+                        pushSWClick("social");
+
+    // < === ASYNCHRONOUS FA2.JS === >
+                        pr(getClientTime()+" : Ini FA2");
+                        var ForceAtlas2 = new Worker("FA2.js");
+                        ForceAtlas2.postMessage({ 
+                            "nodes": partialGraph._core.graph.nodes,
+                            "edges": partialGraph._core.graph.edges,
+                            "it":iterationsFA2
+                        });
+                        ForceAtlas2.addEventListener('message', function(e) {
+                            iterations=e.data.it;
+                            nds=e.data.nodes;
+                            for(var n in nds){
+                                id=nds[n].id;
+                                x=nds[n].x
+                                y=nds[n].y
+                                partialGraph._core.graph.nodes[n].x=x;
+                                partialGraph._core.graph.nodes[n].y=y;
+                                partialGraph._core.graph.nodesIndex[id].x=x
+                                partialGraph._core.graph.nodesIndex[id].y=y
+                                Nodes[id].x=x;
+                                Nodes[id].y=y;
+                            }
+                            pr("\ttotalIterations: "+iterations)
+                            pr(getClientTime()+" : Fin FA2");
+                            console.log("Parsing and FA2 complete.");
+    // < === ASYNCHRONOUS FA2.JS DONE!! === >
+
+                            $("#closemodal").click();//modal.hide doesnt work :c
+                            //    startForceAtlas2(partialGraph._core.graph);r(
+
+                            cancelSelection(false);        
+                            $("#tips").html(getTips());
+                            //$('#sigma-example').css('background-color','white');
+                            $("#category-B").hide();
+                            $("#labelchange").hide();
+                            $("#availableView").hide(); 
+                            showMeSomeLabels(6);
+                            initializeMap();
+                            updateMap();
+                            updateDownNodeEvent(false);
+                            $("#aUnfold").click();
+                            partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
+                            theListeners(); 
+                        }); 
 		    },
 		    error: function(){ 
 		        pr("Page Not found. parseCustom, inside the IF");
@@ -402,55 +453,4 @@ function bringTheNoise(pathfile,type){
 		});
 	    }
     }  
-    // < === DATA EXTRACTED!! === >
-    
-    if(fa2enabled==="off") $("#edgesButton").hide();
-    updateEdgeFilter("social");
-    updateNodeFilter("social");
-    pushSWClick("social");
-    
-    // < === ASYNCHRONOUS FA2.JS === >
-    pr(getClientTime()+" : Ini FA2");
-    var ForceAtlas2 = new Worker("FA2.js");
-    ForceAtlas2.postMessage({ 
-        "nodes": partialGraph._core.graph.nodes,
-        "edges": partialGraph._core.graph.edges,
-        "it":iterationsFA2
-    });
-    ForceAtlas2.addEventListener('message', function(e) {
-        iterations=e.data.it;
-        nds=e.data.nodes;
-        for(var n in nds){
-            id=nds[n].id;
-            x=nds[n].x
-            y=nds[n].y
-            partialGraph._core.graph.nodes[n].x=x;
-            partialGraph._core.graph.nodes[n].y=y;
-            partialGraph._core.graph.nodesIndex[id].x=x
-            partialGraph._core.graph.nodesIndex[id].y=y
-            Nodes[id].x=x;
-            Nodes[id].y=y;
-        }
-        pr("\ttotalIterations: "+iterations)
-        pr(getClientTime()+" : Fin FA2");
-        console.log("Parsing and FA2 complete.");
-        // < === ASYNCHRONOUS FA2.JS DONE!! === >
-        
-        $("#closemodal").click();//modal.hide doesnt work :c
-        //    startForceAtlas2(partialGraph._core.graph);r(
-        
-        cancelSelection(false);        
-        $("#tips").html(getTips());
-        //$('#sigma-example').css('background-color','white');
-        $("#category-B").hide();
-        $("#labelchange").hide();
-        $("#availableView").hide(); 
-        showMeSomeLabels(6);
-        initializeMap();
-        updateMap();
-        updateDownNodeEvent(false);
-        $("#aUnfold").click();
-        partialGraph.zoomTo(partialGraph._core.width / 2, partialGraph._core.height / 2, 0.8).draw(2,2,2);
-        theListeners(); 
-    }); 
 }
