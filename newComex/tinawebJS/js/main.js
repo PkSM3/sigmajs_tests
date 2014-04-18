@@ -361,7 +361,6 @@ function sigmaLimits(){
 }
 
 function bringTheNoise(pathfile,type){
-    $('.modal').modal('show');
     sigmaLimits();
     partialGraph = sigma.init(document.getElementById('sigma-example'))
     .drawingProperties(sigmaJsDrawingProperties)
@@ -415,7 +414,8 @@ function bringTheNoise(pathfile,type){
     var ForceAtlas2 = new Worker("FA2.js");
     ForceAtlas2.postMessage({ 
         "nodes": partialGraph._core.graph.nodes,
-        "edges": partialGraph._core.graph.edges
+        "edges": partialGraph._core.graph.edges,
+        "it":iterationsFA2
     });
     ForceAtlas2.addEventListener('message', function(e) {
         iterations=e.data.it;
@@ -431,6 +431,7 @@ function bringTheNoise(pathfile,type){
             Nodes[id].x=x;
             Nodes[id].y=y;
         }
+        pr("\ttotalIterations: "+iterations)
         pr(getClientTime()+" : Fin FA2");
         console.log("Parsing and FA2 complete.");
         // < === ASYNCHRONOUS FA2.JS DONE!! === >

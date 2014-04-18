@@ -953,7 +953,7 @@ var applyForce = function(n, Force, theta) {
   }
 };
 
-var startForceAtlas2 = function(graph) {
+var startForceAtlas2 = function(graph,limit_it) {
 //    pr("inside FA2")
 ////  if(!this.forceatlas2) {
 //    pr(graph);
@@ -975,7 +975,7 @@ var startForceAtlas2 = function(graph) {
             }
         }
         count++;
-        if(flag||count>1600) break;
+        if(flag||count>limit_it) break;
     }    
 //    pr(forceatlas2.graph.nodes[0].x)
 //    pr(forceatlas2.graph.nodes[0].y)
@@ -992,7 +992,8 @@ self.addEventListener("message", function(e) {
         "nodes":e.data.nodes,
         "edges":e.data.edges
     }
-    result=startForceAtlas2(graph)
+    var limit_it=e.data.it;
+    result=startForceAtlas2(graph,limit_it)
     postMessage({
         "nodes":result.nodes,
         "it":result.it
