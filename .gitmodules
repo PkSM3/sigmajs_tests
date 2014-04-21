@@ -1,0 +1,3 @@
+[submodule "CommExJS"]
+	path = CommExJS
+	url = git@github.com:PkSM3/CommExJS.git
